@@ -11,8 +11,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.recyclerpage2demo.R;
-import com.example.recyclerpage2demo.listener.LoadMoreDataListener;
-import com.example.recyclerpage2demo.listener.RecyclerOnItemClickListener;
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ import java.util.List;
  * Created by zhenghangxia on 17-5-3.
  */
 
-public class MyAdapter extends RecyclerView.Adapter {
+public class MyAdapter extends BaseAdapter {
 
     private static final int VIEW_ITEM = 0;
     private static final int VIEW_PROG = 1;
@@ -39,16 +37,20 @@ public class MyAdapter extends RecyclerView.Adapter {
         mContext = context;
         inflater = LayoutInflater.from(context);
         mRecyclerView = recyclerView;
+
         if (mRecyclerView.getLayoutManager() instanceof LinearLayoutManager) {
             final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-            //mRecyclerView添加滑动事件监听
+
             mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
+
                     totalItemCount = linearLayoutManager.getItemCount();
                     lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
+
                     Log.d("test", "totalItemCount =" + totalItemCount + "-----" + "lastVisibleItemPosition =" + lastVisibleItemPosition);
+
                     if (!isLoading && totalItemCount <= (lastVisibleItemPosition + visibleThreshold)) {
                         //此时是刷新状态
                         if (mMoreDataListener != null)
@@ -135,17 +137,19 @@ public class MyAdapter extends RecyclerView.Adapter {
         mData = data;
     }
 
+    private RecyclerOnItemClickListener mOnitemClickListener;
     private LoadMoreDataListener mMoreDataListener;
 
     //加载更多监听方法
+    @Override
     public void setOnMoreDataLoadListener(LoadMoreDataListener onMoreDataLoadListener) {
         mMoreDataListener = onMoreDataLoadListener;
     }
 
-    private RecyclerOnItemClickListener mOnitemClickListener;
-
     //点击事件监听方法
+    @Override
     public void setOnItemClickListener(RecyclerOnItemClickListener onItemClickListener) {
         mOnitemClickListener = onItemClickListener;
     }
+
 }

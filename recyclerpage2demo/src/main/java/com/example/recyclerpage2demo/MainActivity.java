@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.recyclerpage2demo.adapter.MyAdapter;
-import com.example.recyclerpage2demo.listener.LoadMoreDataListener;
-import com.example.recyclerpage2demo.listener.RecyclerOnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //加载更多回调监听
-        myAdapter.setOnMoreDataLoadListener(new LoadMoreDataListener() {
+        myAdapter.setOnMoreDataLoadListener(new MyAdapter.LoadMoreDataListener() {
             @Override
             public void loadMoreData() {
                 //加入null值此时adapter会判断item的type
@@ -130,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        myAdapter.setOnItemClickListener(new RecyclerOnItemClickListener() {
+        myAdapter.setOnItemClickListener(new MyAdapter.RecyclerOnItemClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Iam BadGuy_Leo", Snackbar.LENGTH_SHORT).show();
