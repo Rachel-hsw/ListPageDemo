@@ -12,10 +12,17 @@ import android.widget.TextView;
 
 import com.example.recyclerpage2demo.R;
 
-import java.util.List;
-
 /**
  * Created by zhenghangxia on 17-5-3.
+ *
+ *  设置滚动监听事件
+ *      1 获取当前显示总条数，最后一条数据的位置
+ *      2 判断当前是否是刷新数据加载数据状态，
+ *          是：当监听器不为空 调用监听方法加载数据  并设置加载状态
+ *
+ *   页面加载与显示
+ *      根据主程序传递的data值进行判断加载 content 部分还是 footer 部分
+ *
  */
 
 public class MyAdapter extends BaseAdapter {
@@ -24,9 +31,8 @@ public class MyAdapter extends BaseAdapter {
     private static final int VIEW_PROG = 1;
     private final Context mContext;
     private final RecyclerView mRecyclerView;
-    private List<String> mData;
+
     private final LayoutInflater inflater;
-    private boolean isLoading;
     private int totalItemCount;
     private int lastVisibleItemPosition;
     //当前滚动的position下面最小的items的临界值
@@ -61,10 +67,6 @@ public class MyAdapter extends BaseAdapter {
             });
         }
 
-    }
-
-    public void setLoaded() {
-        isLoading = false;
     }
 
     @Override
@@ -130,11 +132,6 @@ public class MyAdapter extends BaseAdapter {
             pb = (ProgressBar) itemView.findViewById(R.id.pb);
         }
 
-    }
-
-    //设置数据的方法
-    public void setData(List<String> data) {
-        mData = data;
     }
 
     private RecyclerOnItemClickListener mOnitemClickListener;

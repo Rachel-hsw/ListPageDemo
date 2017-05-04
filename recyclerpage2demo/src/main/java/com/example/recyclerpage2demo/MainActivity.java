@@ -11,11 +11,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.recyclerpage2demo.adapter.BaseAdapter;
 import com.example.recyclerpage2demo.adapter.MyAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  初始化数据
+ *
+ *  初始化UI 设置适配器 填充数据
+ *
+ *  设置监听方法
+ *      下拉刷新数据  ... ...
+ *      上拉加载更多 ：
+ *          1 list.add(null); 用于设置当前为数据加载状态（适配器中通过接受到 list 为 null 值进行判断）
+ *          2  加载数据完成之后，移除掉加载进度条，加载数据，并改变当前状态位
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -71,20 +84,20 @@ public class MainActivity extends AppCompatActivity {
     //初始化数据
     private void initData() {
         for (int i = 0; i < 20; i++) {
-            list.add("handsome is wrong?" + i);
+            list.add("this is a initData " + i);
         }
     }
 
     //初始化加载更多数据
     private void initMoreData() {
         for (int i = 0; i < 10; i++) {
-            moreData.add("life is good" + i);
+            moreData.add("this is a loadMoreData " + i);
         }
     }
 
     private void initRefreshData() {
         for (int i = 0; i < 2; i++) {
-            refreshData.add("refreshData" + i);
+            refreshData.add("this is a refreshData " + i);
         }
     }
 
@@ -107,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //加载更多回调监听
-        myAdapter.setOnMoreDataLoadListener(new MyAdapter.LoadMoreDataListener() {
+        myAdapter.setOnMoreDataLoadListener(new BaseAdapter.LoadMoreDataListener() {
             @Override
             public void loadMoreData() {
                 //加入null值此时adapter会判断item的type
@@ -128,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        myAdapter.setOnItemClickListener(new MyAdapter.RecyclerOnItemClickListener() {
+        myAdapter.setOnItemClickListener(new BaseAdapter.RecyclerOnItemClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Iam BadGuy_Leo", Snackbar.LENGTH_SHORT).show();
